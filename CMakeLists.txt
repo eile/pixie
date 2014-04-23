@@ -10,11 +10,16 @@ set(PIXIE_VERSION ${PIXIE_VERSION_MAJOR}.${PIXIE_VERSION_MINOR}.${PIXIE_VERSION_
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake")
 
 
-set(PIXIE_INSTALL_PREFIX "/usr/local/Pixie" CACHE PATH "Prefix prepended to install directories")
+if(CMAKE_INSTALL_PREFIX)
+  set(PIXIE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX} CACHE PATH "Prefix prepended to install directories")
+else()
+  set(PIXIE_INSTALL_PREFIX "/usr/local/Pixie" CACHE PATH "Prefix prepended to install directories")
+endif()
+
 set(CMAKE_INSTALL_PREFIX "${PIXIE_INSTALL_PREFIX}" CACHE INTERNAL "Prefix prepended to install directories" FORCE)
 
 # ###########################################################################
-# ########## Options 
+# ########## Options
 # ###########################################################################
 option(USE_FLEX_BISON "" ON)
 option(BUILD_SHOW "Build the show program" ON)
