@@ -17,14 +17,14 @@ static	TRibFile	*ribStack	=	NULL;
 
 // Overwrite the YYinput so that it uses libz
 #undef YY_INPUT
-#define YY_INPUT(buf, retval, maxlen)	if ( (retval = gzread(ribin,buf,maxlen)) < 0) 			\
+#define YY_INPUT(buf, retval, maxlen)	if ( (retval = gzread((gzFile)ribin,buf,maxlen)) < 0) 			\
 											YY_FATAL_ERROR( "input in flex scanner failed" );
 
 #endif
 
 %}
 %option never-interactive
-%option noyywrap 
+%option noyywrap
 %%
 Declare												return RIB_DECLARE;
 FrameBegin											return RIB_FRAME_BEGIN;
@@ -189,7 +189,7 @@ ReadArchive[ \t]*\"[^\"]*\"							{
 																ribStack				=	newFile;
 
 																ribFile					=	strdup(fileName);
-																ribLineno				=	1;																
+																ribLineno				=	1;
 																ribin					=	in;
 																rib_switch_to_buffer(rib_create_buffer( ribin, YY_BUF_SIZE ) );
 																BEGIN(INITIAL);
@@ -224,7 +224,7 @@ version												return RIB_VERSION;
 															TRibFile	*nextFile	=	ribStack->next;
 															rib_delete_buffer( YY_CURRENT_BUFFER );
 #ifdef HAVE_ZLIB
-															gzclose(ribin);
+															gzclose((gzFile)ribin);
 #else
 															fclose(ribin);
 #endif
@@ -242,9 +242,9 @@ version												return RIB_VERSION;
 														} else 	{
 															TRibFile	*nextFile	=	ribStack->next;
 															rib_delete_buffer( YY_CURRENT_BUFFER );
-															
+
 #ifdef HAVE_ZLIB
-															gzclose(ribin);
+															gzclose((gzFile)ribin);
 #else
 															fclose(ribin);
 #endif
@@ -258,4 +258,3 @@ version												return RIB_VERSION;
 														}
 													}
 %%
-

@@ -146,7 +146,7 @@ public:
 
 	virtual	void		RiAttributeV(const char *name,int n,const char *tokens[],const void *params[]);
 
-	
+
 	virtual	void		RiPolygonV(int nvertices,int n,const char *tokens[],const void *params[]);
 	virtual	void		RiGeneralPolygonV(int nloops,int *nverts,int n,const char *tokens[],const void *params[]);
 	virtual	void		RiPointsPolygonsV(int npolys,int *nverts,int *verts,int n,const char *tokens[],const void *params[]);
@@ -201,7 +201,7 @@ public:
 
 	virtual	void		*RiArchiveBeginV(const char *name, int n,const char *tokens[],const void *parms[]);
 	virtual	void		RiArchiveEnd(void);
-	
+
 	virtual	void		RiResourceV(const char *handle,const char *type,int n,const char *tokens[],const void *parms[]);
 	virtual	void		RiResourceBegin(void);
 	virtual	void		RiResourceEnd(void);
@@ -237,7 +237,7 @@ private:
 												const int	l	=	vsprintf(scratch,mes,args);
 
 												#ifdef HAVE_ZLIB
-													if (outputCompressed)	gzwrite(outFile,scratch,l);
+                                                if (outputCompressed)	gzwrite((gzFile)outFile,scratch,l);
 													else					fwrite(scratch,1,l,outFile);
 												#else
 													fwrite(scratch,1,l,outFile);
@@ -258,7 +258,7 @@ private:
 												const int l	=	vsprintf(scratch,mes,args);
 
 												#ifdef HAVE_ZLIB
-													if (outputCompressed)	gzwrite(outFile,scratch,l);
+													if (outputCompressed)	gzwrite((gzFile)outFile,scratch,l);
 													else					fwrite(scratch,1,l,outFile);
 												#else
 													fwrite(scratch,1,l,outFile);
@@ -271,4 +271,3 @@ private:
 
 
 #endif
-
